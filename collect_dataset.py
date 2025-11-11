@@ -1,3 +1,6 @@
+#dataset collection
+
+
 import cv2
 import os
 
@@ -16,10 +19,12 @@ cap = cv2.VideoCapture(0)
 if not cap.isOpened():
     print("Error: Cannot open webcam")
     exit()
-
+#Before capturing each gesture, it waits for you to press ENTER.
 for label in sign_labels:
     print(f"\n▶ Ready to record: {label.upper()}")
     input("Press ENTER to start capturing...")
+    
+#Creates a subfolder like: dataset/hello/  to store all images for that specific sign.
 
     label_dir = os.path.join(dataset_path, label)
     os.makedirs(label_dir, exist_ok=True)
@@ -33,18 +38,18 @@ for label in sign_labels:
             print("Error reading frame.")
             break
 
-        # Show frame
+        # Display Live Feed with Instructions Recording: HELLO (12/32)
         display_frame = frame.copy()
         cv2.putText(display_frame, f"Recording: {label} ({img_count}/{total_imgs})",
                     (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
         cv2.imshow("Dataset Collector", display_frame)
 
         # Save frame
-        img_path = os.path.join(label_dir, f"{label}_{img_count}.jpg")
+        img_path = os.path.join(label_dir, f"{label}_{img_count}.jpg") #dataset/hello/hello_0.jpg
         cv2.imwrite(img_path, frame)
         img_count += 1
 
-        # Exit if ESC is pressed
+        # Wait 2 Seconds Between Captures
         if cv2.waitKey(2000) & 0xFF == 27:
             print("Recording interrupted.")
             break
@@ -54,3 +59,4 @@ for label in sign_labels:
 print("\n🎉 Dataset collection completed!")
 cap.release()
 cv2.destroyAllWindows()
+
