@@ -15,7 +15,7 @@ with open('class_labels.json') as f:
 classes = list(class_indices.keys())
 
 engine = pyttsx3.init()
-engine.setProperty('rate', 150)
+engine.setProperty('rate', 150)  #(150 words/minute).
 speech_queue = queue.Queue()
 
 def speech_worker():
@@ -125,4 +125,5 @@ while True:
 speech_queue.put(None)
 cap.release()
 cv2.destroyAllWindows()
+
 
